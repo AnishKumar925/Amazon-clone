@@ -3,8 +3,9 @@ import { Tabs, Tab, Box, CircularProgress, Typography, Tooltip } from "@mui/mate
 import { NavbarSection } from "../../styles/Navbar";
 import { apiClint } from "../../api/Config";
 import { API_PATHS } from "../../api/ApiPath";
+import { Link } from "react-router-dom";
 
- const Navbar = () => {
+const Navbar = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -32,9 +33,9 @@ import { API_PATHS } from "../../api/ApiPath";
   return (
     <NavbarSection>
       <Box sx={{ width: "100%", textAlign: "center" }}>
-        {loading && <CircularProgress sx={{ color: "white"  }} />}
+        {loading && <CircularProgress sx={{ color: "white" }} />}
         {error && <Typography sx={{ color: "red" }}>{error}</Typography>}
-        
+
         {!loading && !error && categories.length > 0 && (
           <Tabs
             value={selectedTab}
@@ -43,50 +44,75 @@ import { API_PATHS } from "../../api/ApiPath";
             scrollButtons="auto"
             sx={{
               "& .MuiTabs-indicator": {
-                display: "none", 
-                color  : "white"
+                display: "none",
               },
             }}
           >
+            {/* All Categories Tab (White Font & Hover Border) */}
+            <Tab
+              component={Link}
+              to="/categories"
+              label="All Categories"
+              sx={{
+                color: "white !important",
+                textTransform: "none",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                "&:hover": {
+                  border: "2px solid white",
+                },
+              }}
+            />
+
             {categories.map((category) => {
-              const subcategories = category.subCategories || []; 
+              const subcategories = category.subCategories || [];
 
               return (
-<Tooltip
-  key={category.id}
-  title={
-    subcategories.length > 0 ? (
-      <Box >
-        {subcategories.map((sub) => (
-          <Typography key={sub.id} sx={{ fontSize: "14px", color: "black", px: 1 }}>
-            {sub.name}
-          </Typography>
-        ))}
-      </Box>
-    ) : (
-      "No subcategories"
-    )
-  }
-  arrow
-  slotProps={{
-    tooltip: {
-      sx: {
-        bgcolor: "white",
-        color: "black",
-        boxShadow: 3,
-      },
-    },
-    arrow: {
-      sx: {
-        color: "white",
-      },
-    },
-  }}
->
-  <Tab label={category.name} sx={{ color: "white" }} />
-</Tooltip>
-
-              
+                <Tooltip
+                  key={category.id}
+                  title={
+                    subcategories.length > 0 ? (
+                      <Box>
+                        {subcategories.map((sub) => (
+                          <Typography key={sub.id} sx={{ fontSize: "14px", color: "black", px: 1 }}>
+                            {sub.name}
+                          </Typography>
+                        ))}
+                      </Box>
+                    ) : (
+                      "No subcategories"
+                    )
+                  }
+                  arrow
+                  slotProps={{
+                    tooltip: {
+                      sx: {
+                        bgcolor: "white",
+                        color: "black",
+                        boxShadow: 3,
+                      },
+                    },
+                    arrow: {
+                      sx: {
+                        color: "white",
+                      },
+                    },
+                  }}
+                >
+                  <Tab
+                  component={Link}
+                  to={`subcategories?id=${category.id}`}
+                    label={category.name}
+                    sx={{
+                      color: "white",
+                      textTransform: "none",
+                      "&:hover": {
+                        border: "2px solid white",
+                      },
+                    }}
+                  />
+                </Tooltip>
               );
             })}
           </Tabs>
@@ -95,4 +121,5 @@ import { API_PATHS } from "../../api/ApiPath";
     </NavbarSection>
   );
 };
-export default Navbar
+
+export default Navbar;

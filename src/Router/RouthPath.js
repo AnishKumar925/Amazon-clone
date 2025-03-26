@@ -4,7 +4,7 @@ export const ROUTH_PATHS ={
     LOGIN_PAGE :"/login",
     REGISTER_PAGE :"/register", 
     PRODUCT_LIST :"/productList",
-    CATAGORIES :"/catagories",
-    SUB_CATAGORIES :"/subCategory",
+    CATAGORIES :"/categories",
+    SUB_CATAGORIES :"/subCategories",
     NO_MATCH :"*"
 };
