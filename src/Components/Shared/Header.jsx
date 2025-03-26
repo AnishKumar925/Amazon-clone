@@ -7,7 +7,8 @@ import { IndiaFlag } from "../../styles/Header";
 import { Image, ProductList, InputSearch, SearchButton, ShowLang, LangStyle } from "../../styles/Header";
 import { apiClint } from "../../api/Config";
 import { API_PATHS } from "../../api/ApiPath";
-
+import { Link } from "react-router-dom";
+import Navbar from "./Navbar";
 const Header = () => {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -37,6 +38,7 @@ const Header = () => {
   ];
 
   return (
+    <>
     <Box sx={{ backgroundColor: "#131921", display: "flex", alignItems: "center", padding: "10px" }}>
       {/* Logo Section */}
       <Box sx={{ marginRight: "20px" }}>
@@ -103,10 +105,10 @@ const Header = () => {
       <Tooltip 
         title={
           <Box sx={{ padding: "10px" }}>
-            <Typography variant="body2" sx={{ fontWeight: "bold", cursor: "pointer", "&:hover": { textDecoration: "underline", color: "orange" } }}>
-              Sign in
-            </Typography>
-          </Box>
+          <Typography variant="body2" sx={{ fontWeight: "bold", cursor: "pointer", "&:hover": { textDecoration: "underline", color: "orange" } }}>
+            <Link to="/Register" style={{ textDecoration: "none", color: "inherit" }}>Sign in</Link>
+          </Typography>
+        </Box>
         } 
         arrow
         slotProps={{
@@ -120,7 +122,10 @@ const Header = () => {
         </Box>
       </Tooltip>
     </Box>
+    <Navbar/>
+    </>
   );
 };
+
 
 export default Header;

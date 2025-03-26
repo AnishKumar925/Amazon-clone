@@ -19,10 +19,5 @@ export const StyledLink = styled(Link)({
   fontSize: "14px",
   padding: "5px 10px",
   fontWeight: "bold",
-  transition: "color 0.3s ease-in-out",
-
-  "&:hover": {
-    color: "#fff",
-
-  },
+  
 });

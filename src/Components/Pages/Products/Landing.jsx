@@ -1,106 +1,94 @@
 import React, { useEffect, useState } from "react";
-import Header from "../../Shared/Header";
-import { Footer } from "../../Shared/Footer";
-import { Navbar } from "../../Shared/Navbar";
+
 import { apiClint } from "../../../api/Config";
 import { API_PATHS } from "../../../api/ApiPath";
-import { Container, Box, Typography, Grid, Card, CardMedia, CardContent } from "@mui/material";
+import {  Box, Typography, Card, CardMedia, CardContent, Grid, Grid2 } from "@mui/material";
 
-const Banner = () => {
+export const Landing = () => {
   const [bannerImage, setBannerImage] = useState(null);
+  const [products, setProducts] = useState([]);
 
-  // Fetch banner images
   useEffect(() => {
     const fetchCategory = async () => {
       try {
         const bannerResponse = await apiClint.get(API_PATHS.BANNER_IMAGES);
-        const imageUrl = bannerResponse.data[0].bannerImagePath;
-        setBannerImage(imageUrl);
+        
+          setBannerImage(bannerResponse.data[0].bannerImagePath);
+        
       } catch (error) {
         console.error("Error fetching banners:", error);
       }
     };
+
     fetchCategory();
   }, []);
 
-  return (
-    <Box sx={{ display: "flex", justifyContent: "center",  }}>
-      {bannerImage ? (
-        <img
-          src={bannerImage}
-          alt="Banner"
-          style={{
-          whidth:"100%"        
-        
-          }}
-        />
-      ) : (
-        <Typography variant="h6" sx={{ color: "gray" }}>
-          No banner available
-        </Typography>
-      )}
-    </Box>
-  );
-};
-
-export const Landing = () => {
-  const [subcategories, setSubcategories] = useState([]);
-  // Fetch subcategories with images
-
-    const fetchSubcategories = async () => {
-      try {
-        const response = await apiClint.get(API_PATHS.CATEGORIES_WITHSUB_API);
-        if (response.data) {
-          console.log(response.data[0]);
-          const Subcategories = response.data[0].flatMap(category => 
-            category.product.map(sub => ({
-              id: sub.id,
-              name: sub.name,
-              // image: sub.categoryImagePath, 
-            }))
-          );
-          setSubcategories(Subcategories);
-        }
-      } catch (error) {
-        console.error("Error fetching subcategories:", error);
-      }
-    };
+  const fetchProducts = async () => {
+    try {
+      const response = await apiClint.get(API_PATHS.LANDING_API);
+      console.log("API Response:", response.data);
+      setProducts(response.data);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
 
   useEffect(() => {
-    fetchSubcategories();
+    fetchProducts();
   }, []);
+
   return (
     <>
-      <Header />
-      <Navbar />
-      <Container>
-        <Banner />
-        {/* Subcategories Grid */}
-        <Box sx={{ mt: 5 }}>
-        
-          <Grid container spacing={3}>
-            {subcategories.map((sub) => (
-              <Grid item key={sub.id} xs={12} sm={6} md={3}>
-                <Card sx={{ boxShadow: 3, borderRadius: 2 }}>
-                  <CardMedia
-                    component="img"
-                    height="140"
-                    image={sub.
-                      categoryImagePath} // Fallback image
-                    alt={sub.name}
-                  />
-                  <CardContent>
-                    <Typography variant="h6" textAlign="center">
-                      {sub.name}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
+
+      {/* Banner Image */}
+      <Box sx={{ display: "flex", justifyContent: "center", position:"absolute"}}>
+        {bannerImage ? (
+          <img src={bannerImage} alt="Banner" style={{ width: "100%", borderRadius: "8px" }} />
+        ) : (
+          <Typography variant="h6" sx={{ color: "gray" }}>No banner available</Typography>
+        )}
+      </Box>
+
+      {/* Product Listing */}
+        <Box sx={{position:"relative", marginTop:"260px" }}>
+          <Grid2 container spacing={3}  justifyContent="center">
+            {products.map((prod, index) => {
+              // Check if product and image data exist
+              const productData = prod.product?.[0];
+              const productImage = productData?.productImages?.[0]?.productImagePath;
+              const baseUrl = productData?.fileBaseUrl;
+
+              return (
+                <Grid2 item xs={12} sm={6}   key={index}>
+                  <Card sx={{ width: 490, height: 200, display: "flex", flexDirection: "column" }}>
+                    <CardContent sx={{ textAlign: "center", padding: "8px" }}>
+                      <Typography variant="h6">{prod.name}</Typography>
+                    </CardContent>
+                    {productImage ? (
+                      <CardMedia
+                        component="img"
+                        image={`${baseUrl}${productImage}`}
+                        alt="Product"
+                        sx={{
+                          width: "100px",
+                          height: "150px",
+                         objectFit:"contain",
+                          margin: "auto",
+                        }}
+                      />
+                    ) : (
+                      <Typography sx={{ textAlign: "center", color: "gray", flexGrow: 1 }}>
+                        No Image Available
+                      </Typography>
+                    )}
+                  </Card>
+                </Grid2>
+              );
+            })}
+          </Grid2>
         </Box>
-      </Container>
-      <Footer />
     </>
   );
 };
+
+export default Landing;

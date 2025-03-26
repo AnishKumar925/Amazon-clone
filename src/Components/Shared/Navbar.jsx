@@ -4,7 +4,7 @@ import { NavbarSection } from "../../styles/Navbar";
 import { apiClint } from "../../api/Config";
 import { API_PATHS } from "../../api/ApiPath";
 
-export const Navbar = () => {
+ const Navbar = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -32,7 +32,7 @@ export const Navbar = () => {
   return (
     <NavbarSection>
       <Box sx={{ width: "100%", textAlign: "center" }}>
-        {loading && <CircularProgress sx={{ color: "white" }} />}
+        {loading && <CircularProgress sx={{ color: "white"  }} />}
         {error && <Typography sx={{ color: "red" }}>{error}</Typography>}
         
         {!loading && !error && categories.length > 0 && (
@@ -41,41 +41,51 @@ export const Navbar = () => {
             onChange={handleChange}
             variant="scrollable"
             scrollButtons="auto"
-            sx={{ "& .MuiTabs-flexContainer": { justifyContent: "center" } }}
+            sx={{
+              "& .MuiTabs-indicator": {
+                display: "none", 
+                color  : "white"
+              },
+            }}
           >
             {categories.map((category) => {
-              const subcategories = category.subCategories || []; // ✅ Fix: Reference subCategories correctly
+              const subcategories = category.subCategories || []; 
 
               return (
-                <Tooltip
-                key={category.id}
-                title={
-                  subcategories.length > 0 ? (
-                    <Box sx={{ bgcolor: "white", p: 1, borderRadius: 1, boxShadow: 3 }}>
-                      {subcategories.map((sub) => (
-                        <Typography key={sub.id} sx={{ fontSize: "14px", color: "black", px: 1 }}>
-                          {sub.name}
-                        </Typography>
-                      ))}
-                    </Box>
-                  ) : (
-                    "No subcategories"
-                  )
-                }
-                arrow
-                PopperProps={{
-                  modifiers: [
-                    {
-                      name: "preventOverflow",
-                      options: {
-                        boundary: "window",
-                      },
-                    },
-                  ],
-                }}
-              >
-                <Tab label={category.name} sx={{ color: "white" }} />
-              </Tooltip>
+<Tooltip
+  key={category.id}
+  title={
+    subcategories.length > 0 ? (
+      <Box >
+        {subcategories.map((sub) => (
+          <Typography key={sub.id} sx={{ fontSize: "14px", color: "black", px: 1 }}>
+            {sub.name}
+          </Typography>
+        ))}
+      </Box>
+    ) : (
+      "No subcategories"
+    )
+  }
+  arrow
+  slotProps={{
+    tooltip: {
+      sx: {
+        bgcolor: "white",
+        color: "black",
+        boxShadow: 3,
+      },
+    },
+    arrow: {
+      sx: {
+        color: "white",
+      },
+    },
+  }}
+>
+  <Tab label={category.name} sx={{ color: "white" }} />
+</Tooltip>
+
               
               );
             })}
@@ -85,3 +95,4 @@ export const Navbar = () => {
     </NavbarSection>
   );
 };
+export default Navbar
