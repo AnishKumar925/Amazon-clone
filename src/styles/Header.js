@@ -20,7 +20,7 @@ export const LanguageSelect = styled(Select)({});
 // Search Input Box
 export const InputSearch = styled(OutlinedInput)({
   backgroundColor: "white",
-  width: "40%",
+  width: "70%",
   height: "38px",
   borderRadius: "0px",
   outline: "none",

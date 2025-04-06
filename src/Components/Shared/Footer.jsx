@@ -1,11 +1,23 @@
 import React from "react";
-import { BackToTop, FooterContainer, FooterSection, StyledLink } from "../../styles/Footer";
-import {  Typography } from "@mui/material";
-
+import { BackToTop, FooterContainer, FooterSection, StyledLink, SignContainer } from "../../styles/Footer";
+import { Typography, Box, Button } from "@mui/material";
 
 export const Footer = () => {
   return (
     <>
+<SignContainer sx={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column",marginTop:"10px"  }}>
+  <hr style={{ width: "100%", border: "1px solid #ccc", marginBottom: "1rem"}} />
+  <Box sx={{ textAlign: "center", p: 2 }}>
+    <Typography variant="body1">See personalized recommendations</Typography>
+    <Button sx={{ bgcolor: "#F3C42C",textTransform:"capitalize", color: "black", width: { xs: "80%", sm: "30vh" }, mt: 1 }}>
+      Sign In
+    </Button>
+    <Typography variant="body1" sx={{ mt: 1 }}>
+      New Customer? <span style={{ textDecoration: "underline", cursor: "pointer" }}>Start here</span>
+    </Typography>
+  </Box>
+</SignContainer>
+
       {/* Back to Top Section */}
       <BackToTop>
         <Typography>Back to top</Typography>
@@ -39,9 +51,6 @@ export const Footer = () => {
           <StyledLink to="/affiliate">Fulfilment by Amazon</StyledLink>
           <StyledLink to="/advertise">Advertise Your Products</StyledLink>
           <StyledLink to="/advertise">Amazon Pay on Merchants</StyledLink>
-
-
-          
         </FooterSection>
 
         <FooterSection>

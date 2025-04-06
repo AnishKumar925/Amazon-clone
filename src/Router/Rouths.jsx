@@ -6,6 +6,7 @@ import Layout from "../Components/Pages/Products/Layout"
 import ProductList from "../Components/Pages/Products/ProductList"
 import Categories from "../Components/Pages/Catagories/Catagories"
 import SubCategories from "../Components/Pages/Catagories/SubCatagories"
+import ProductDetials from "../Components/Pages/Products/ProductDetials"
 
 export const routes = [
     {
@@ -28,6 +29,10 @@ children:[{
 {
     path: ROUTH_PATHS.PRODUCT_LIST,
     element:<ProductList/>
+ },
+ {
+    path: ROUTH_PATHS.PRODUCT_DETAILS,
+    element:<ProductDetials/>
  }]
     },
 
@@ -39,8 +44,6 @@ children:[{
     path:ROUTH_PATHS.REGISTER_PAGE,
     element :<Register/>
 },
-
-
 {
     path:ROUTH_PATHS.NO_MATCH,
     element: <h1>404: page not found</h1>

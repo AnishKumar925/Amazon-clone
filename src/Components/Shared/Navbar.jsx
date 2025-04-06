@@ -75,9 +75,15 @@ const Navbar = () => {
                     subcategories.length > 0 ? (
                       <Box>
                         {subcategories.map((sub) => (
-                          <Typography key={sub.id} sx={{ fontSize: "14px", color: "black", px: 1 }}>
-                            {sub.name}
-                          </Typography>
+                          <Link
+                            key={sub.id}
+                            to={`/ProductList?id=${sub.id}`}
+                            style={{ textDecoration: "none" }}
+                          >
+                            <Typography sx={{ fontSize: "14px", color: "black", px: 1 }}>
+                              {sub.name}
+                            </Typography>
+                          </Link>
                         ))}
                       </Box>
                     ) : (
@@ -101,8 +107,8 @@ const Navbar = () => {
                   }}
                 >
                   <Tab
-                  component={Link}
-                  to={`subcategories?id=${category.id}`}
+                    component={Link}
+                    to={`/subcategories?id=${category.id}`}
                     label={category.name}
                     sx={{
                       color: "white",

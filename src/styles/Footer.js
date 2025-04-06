@@ -47,11 +47,15 @@ export const StyledLink = styled(Link)({
   },
 });
 
-// // Bottom Footer Section
-// export const BottomFooter = styled(Box)({
-//   textAlign: "center",
-//   backgroundColor: "#131A22",
-//   color: "#CCCCCC",
-//   padding: "15px",
-//   fontSize: "12px",
-// });
+// Bottom Footer Section
+export const BottomFooter = styled(Box)({
+  textAlign: "center",
+  backgroundColor: "#131A22",
+  color: "#CCCCCC",
+  padding: "15px",
+  fontSize: "12px",
+});
+
+export const SignContainer = styled(Box)({
+  
+})
